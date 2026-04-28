@@ -3,14 +3,15 @@ import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { PenTool, Scissors, FileText, Ruler, Paperclip, ChevronRight } from "lucide-react";
+import { PenTool, Scissors, FileText, Ruler, Paperclip, ChevronRight, Printer } from "lucide-react";
 
 const CATEGORIES = [
   { name: "Writing Essentials", icon: PenTool, color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-900/20", desc: "Pens, pencils, and markers" },
   { name: "Correction & Marking", icon: Scissors, color: "text-pink-600 dark:text-pink-400", bg: "bg-pink-50 dark:bg-pink-900/20", desc: "Highlighters, erasers, and tapes" },
   { name: "Paper Products", icon: FileText, color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-900/20", desc: "Notebooks, sticky notes, and planners" },
   { name: "Measuring Tools", icon: Ruler, color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-50 dark:bg-amber-900/20", desc: "Rulers, protractors, and compasses" },
-  { name: "Office Utility", icon: Paperclip, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-900/20", desc: "Clips, staplers, and organizers" }
+  { name: "Office Utility", icon: Paperclip, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-900/20", desc: "Clips, staplers, and organizers" },
+  { name: "Print", icon: Printer, color: "text-indigo-600 dark:text-indigo-400", bg: "bg-indigo-50 dark:bg-indigo-900/20", desc: "Upload PDFs/DOCX for high-quality printing" }
 ];
 
 export default function Dashboard() {
@@ -42,7 +43,7 @@ export default function Dashboard() {
           return (
             <Link 
               key={cat.name} 
-              href={`/category/${encodeURIComponent(cat.name)}`}
+              href={cat.name === "Print" ? "/report" : `/category/${encodeURIComponent(cat.name)}`}
               className="group relative bg-white dark:bg-zinc-900 rounded-3xl p-8 border border-gray-100 dark:border-zinc-800 shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:hover:shadow-[0_8px_30px_rgb(255,255,255,0.03)] transition-all duration-300 hover:-translate-y-1 overflow-hidden"
               style={{ animationDelay: `${i * 100}ms` }}
             >

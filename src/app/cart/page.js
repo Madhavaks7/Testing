@@ -7,9 +7,11 @@ import Image from "next/image";
 import { Minus, Plus, Trash2, ArrowRight, ShoppingBag, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Script from "next/script";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
+  const { cartItems: cart, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
   const { user, loading } = useAuth();
   const router = useRouter();
   
@@ -46,9 +48,24 @@ export default function CartPage() {
         name: "Techfusion",
         description: "Stationery Order",
         order_id: data.orderId,
-        handler: function (response) {
+        handler: async function (response) {
           // Payment successful
-          setOrderId(response.razorpay_payment_id);
+          const paymentId = response.razorpay_payment_id;
+          
+          try {
+            await addDoc(collection(db, "orders"), {
+              orderId: paymentId,
+              items: cart,
+              totalAmount: cartTotal,
+              userEmail: user?.email || "Guest",
+              status: "Paid",
+              createdAt: serverTimestamp()
+            });
+          } catch (err) {
+            console.error("Error saving order:", err);
+          }
+
+          setOrderId(paymentId);
           setOrderComplete(true);
           clearCart();
           setIsCheckingOut(false);

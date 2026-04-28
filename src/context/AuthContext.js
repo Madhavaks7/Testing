@@ -12,6 +12,15 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const isHardcodedAdmin = typeof window !== "undefined" && localStorage.getItem("techfusion_hardcoded_admin") === "true";
+    
+    if (isHardcodedAdmin) {
+      setUser({ email: "admin123@gmail.com", uid: "hardcoded_admin", metadata: { creationTime: new Date().toISOString() } });
+      setRole("admin");
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
@@ -39,10 +48,15 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("techfusion_hardcoded_admin");
+      }
       await signOut(auth);
     } catch (error) {
       console.error("Error signing out", error);
     }
+    setUser(null);
+    setRole(null);
   };
 
   return (

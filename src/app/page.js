@@ -31,6 +31,16 @@ export default function LoginPage() {
     setError("");
     setIsSubmitting(true);
 
+    if (isLogin && email === "admin123@gmail.com" && password === "admin123") {
+      // Hardcode admin bypass
+      localStorage.setItem("techfusion_hardcoded_admin", "true");
+      // Give context a moment to catch the localstorage change before redirecting
+      setTimeout(() => {
+        window.location.href = "/admin"; // Force reload to re-run context initialization
+      }, 500);
+      return;
+    }
+
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);

@@ -41,9 +41,6 @@ export default function Navbar() {
           <div className="flex items-center gap-6">
             {!loading && user && (
               <>
-                <Link href="/report" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors flex items-center gap-1">
-                  Print Report
-                </Link>
                 <Link href="/dashboard" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
                   Shop
                 </Link>
