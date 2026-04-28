@@ -31,7 +31,6 @@ export default function AdminPage() {
     category: CATEGORIES[0],
     price: "",
     description: "",
-    image: "",
     inStock: true
   });
 
@@ -94,7 +93,6 @@ export default function AdminPage() {
         category: CATEGORIES[0],
         price: "",
         description: "",
-        image: "",
         inStock: true
       });
       setIsSubmitting(false);
@@ -197,18 +195,7 @@ export default function AdminPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Image URL</label>
-                  <input
-                    type="url"
-                    name="image"
-                    required
-                    value={formData.image}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </div>
+
 
                 <div className="flex items-center">
                   <input
