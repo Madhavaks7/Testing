@@ -29,15 +29,12 @@ export default function AuthPage() {
     }
   }, [user, role, loading, router]);
 
-  // Pre-fill credentials if switching to Admin portal
+  // Clear credentials if switching to/from Admin portal
   useEffect(() => {
+    setEmail("");
+    setPassword("");
     if (isAdminPortal) {
-      setEmail("admin123@gmail.com");
-      setPassword("admin123");
       setIsLogin(true); // admins can't sign up from here
-    } else {
-      setEmail("");
-      setPassword("");
     }
   }, [isAdminPortal]);
 
@@ -46,14 +43,20 @@ export default function AuthPage() {
     setError("");
     setIsSubmitting(true);
 
-    if (isLogin && email === "admin123@gmail.com" && password === "admin123") {
-      // Hardcode admin bypass
-      localStorage.setItem("techfusion_hardcoded_admin", "true");
-      // Give context a moment to catch the localstorage change before redirecting
-      setTimeout(() => {
-        window.location.href = "/admin"; // Force reload to re-run context initialization
-      }, 500);
-      return;
+    if (isAdminPortal) {
+      if (email === "admin123@gmail.com" && password === "admin123") {
+        // Hardcode admin bypass
+        localStorage.setItem("techfusion_hardcoded_admin", "true");
+        // Give context a moment to catch the localstorage change before redirecting
+        setTimeout(() => {
+          window.location.href = "/admin"; // Force reload to re-run context initialization
+        }, 500);
+        return;
+      } else {
+        setError("Invalid Admin Credentials");
+        setIsSubmitting(false);
+        return;
+      }
     }
 
     try {
@@ -129,8 +132,7 @@ export default function AuthPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  readOnly={isAdminPortal}
-                  className={`w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none ${isAdminPortal ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
                   placeholder="you@example.com"
                 />
               </div>
@@ -142,8 +144,7 @@ export default function AuthPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  readOnly={isAdminPortal}
-                  className={`w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none ${isAdminPortal ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
                   placeholder="••••••••"
                 />
               </div>

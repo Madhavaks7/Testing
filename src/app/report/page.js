@@ -16,16 +16,19 @@ export default function ReportPage() {
   const [pagesDetected, setPagesDetected] = useState(0);
   const [copies, setCopies] = useState(1);
   const [colorType, setColorType] = useState("bw"); // 'bw' or 'color'
+  const [softBinding, setSoftBinding] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const [error, setError] = useState("");
 
   const fileInputRef = useRef(null);
 
   // Pricing in INR
-  const PRICE_BW = 8.00; // ₹8 per page
-  const PRICE_COLOR = 28.00; // ₹28 per page
+  const PRICE_BW = 2.00; // ₹2 per page
+  const PRICE_COLOR = 6.00; // ₹6 per page
+  const BINDING_FEE = 15.00; // ₹15 flat fee for soft binding
+
   const unitPrice = colorType === "bw" ? PRICE_BW : PRICE_COLOR;
-  const itemPrice = pagesDetected * unitPrice;
+  const itemPrice = (pagesDetected * unitPrice) + (softBinding ? BINDING_FEE : 0);
   const totalPrice = itemPrice * copies;
 
   useEffect(() => {
@@ -88,7 +91,8 @@ export default function ReportPage() {
       details: {
         fileName: file.name,
         pages: pagesDetected,
-        color: colorType
+        color: colorType,
+        binding: softBinding ? "Soft Binding" : "None"
       }
     };
 
@@ -101,6 +105,7 @@ export default function ReportPage() {
       setPagesDetected(0);
       setCopies(1);
       setColorType("bw");
+      setSoftBinding(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
     }, 2000);
   };
@@ -247,6 +252,24 @@ export default function ReportPage() {
                     </div>
                   </div>
 
+                  {/* Binding Option */}
+                  <div className="pt-2">
+                    <div className="flex items-center p-4 bg-gray-50 dark:bg-zinc-800/50 rounded-xl border border-gray-200 dark:border-zinc-700 cursor-pointer" onClick={() => setSoftBinding(!softBinding)}>
+                      <input
+                        type="checkbox"
+                        checked={softBinding}
+                        onChange={(e) => setSoftBinding(e.target.checked)}
+                        className="w-5 h-5 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-zinc-700 dark:border-zinc-600 pointer-events-none"
+                      />
+                      <div className="ml-3 flex-1 flex justify-between items-center">
+                        <label className="text-sm font-semibold text-gray-900 dark:text-gray-200 cursor-pointer">
+                          Soft Binding
+                        </label>
+                        <span className="text-sm font-bold text-gray-700 dark:text-gray-400">+₹{BINDING_FEE.toFixed(2)} / copy</span>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
 
                 {/* Price Summary */}
@@ -270,6 +293,12 @@ export default function ReportPage() {
                         <span>Copies</span>
                         <span className="font-medium text-gray-900 dark:text-white">x {copies}</span>
                       </li>
+                      {softBinding && (
+                        <li className="flex justify-between text-indigo-600 dark:text-indigo-400">
+                          <span>Soft Binding</span>
+                          <span className="font-medium">Included (+₹{BINDING_FEE.toFixed(2)})</span>
+                        </li>
+                      )}
                     </ul>
                     <div className="pt-4 border-t border-gray-200 dark:border-zinc-700">
                       <div className="flex justify-between items-end">

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { PackageSearch, PlusCircle, CheckCircle2, XCircle, Loader2, ClipboardList } from "lucide-react";
 import Image from "next/image";
 import { db } from "@/lib/firebase";
-import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { collection, query, orderBy, getDocs, doc, updateDoc } from "firebase/firestore";
 
 const CATEGORIES = [
   "Writing Essentials",
@@ -56,6 +56,18 @@ export default function AdminPage() {
       console.error("Error fetching orders:", err);
     } finally {
       setLoadingOrders(false);
+    }
+  };
+
+  const toggleOrderStatus = async (orderId, currentStatus) => {
+    try {
+      const newStatus = currentStatus === "Order Received" ? "Order Completed" : "Order Received";
+      const orderRef = doc(db, "orders", orderId);
+      await updateDoc(orderRef, { status: newStatus });
+      setOrders(orders.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
+    } catch (err) {
+      console.error("Error updating order status:", err);
+      alert("Failed to update status");
     }
   };
 
@@ -307,11 +319,12 @@ export default function AdminPage() {
                     <th className="px-6 py-4 font-medium">Total</th>
                     <th className="px-6 py-4 font-medium">Status</th>
                     <th className="px-6 py-4 font-medium">Date</th>
+                    <th className="px-6 py-4 font-medium text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
                   {orders.map((order) => (
-                    <tr key={order.id} className="hover:bg-gray-50/50 dark:hover:bg-zinc-800/30 transition-colors">
+                    <tr key={order.id} className={`transition-colors ${order.status === "Order Completed" ? "bg-green-50/50 dark:bg-green-900/10 hover:bg-green-100/50 dark:hover:bg-green-900/20" : "hover:bg-gray-50/50 dark:hover:bg-zinc-800/30"}`}>
                       <td className="px-6 py-4">
                         <span className="font-mono text-xs bg-gray-100 dark:bg-zinc-800 px-2 py-1 rounded text-gray-700 dark:text-gray-300">
                           {order.orderId}
@@ -336,12 +349,28 @@ export default function AdminPage() {
                         ₹{parseFloat(order.totalAmount || 0).toFixed(2)}
                       </td>
                       <td className="px-6 py-4">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${
+                          order.status === "Order Completed" 
+                            ? "bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800"
+                            : "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800"
+                        }`}>
                           {order.status}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                         {order.createdAt ? new Date(order.createdAt.seconds ? order.createdAt.seconds * 1000 : order.createdAt).toLocaleDateString() : 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <button
+                          onClick={() => toggleOrderStatus(order.id, order.status)}
+                          className={`text-sm font-semibold transition-colors ${
+                            order.status === "Order Completed" 
+                              ? "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                              : "text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                          }`}
+                        >
+                          {order.status === "Order Completed" ? "Revert" : "Mark Completed"}
+                        </button>
                       </td>
                     </tr>
                   ))}

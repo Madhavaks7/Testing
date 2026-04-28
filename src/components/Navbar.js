@@ -6,6 +6,8 @@ import { LogOut, ShoppingCart, Settings, Moon, Sun, User as UserIcon } from "luc
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function Navbar() {
   const { user, role, loading, logout } = useAuth();
@@ -13,10 +15,28 @@ export default function Navbar() {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [completedOrders, setCompletedOrders] = useState([]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (user && role !== "admin") {
+      const q = query(
+        collection(db, "orders"),
+        where("userEmail", "==", user.email),
+        where("status", "==", "Order Completed")
+      );
+      
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setCompletedOrders(orders);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [user, role]);
 
   const handleLogout = async () => {
     await logout();
@@ -87,6 +107,13 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      
+      {/* Notifications Bar */}
+      {completedOrders.length > 0 && (
+        <div className="bg-green-500 text-white px-4 py-2 text-center text-sm font-semibold shadow-md animate-in slide-in-from-top-2">
+          🎉 Good news! You have {completedOrders.length} order(s) completed and ready to be taken. (Latest: {completedOrders[0].orderId})
+        </div>
+      )}
     </nav>
   );
 }

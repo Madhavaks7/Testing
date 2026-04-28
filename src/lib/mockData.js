@@ -1,200 +1,283 @@
 export const MOCK_PRODUCTS = [
-  // Writing Essentials
+  // ---------------- Writing Essentials ----------------
   {
-    id: "1",
-    name: "Classic Ballpoint Pen (Blue)",
+    id: "we_1",
+    name: "Pen",
     category: "Writing Essentials",
-    price: 20,
-    description: "Reliable blue ballpoint pen for everyday use. Smooth ink flow.",
-    image: "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    price: 10,
+    description: "Reliable ballpoint, gel, or fountain pens for everyday use.",
+    inStock: true,
+    options: {
+      Brand: ["Hauser", "Pentonic", "Rorito", "Trimax", "Octane"],
+      Type: ["Ball", "Gel", "Fountain"],
+      Color: ["Red", "Black", "Blue", "Green"]
+    }
   },
   {
-    id: "2",
-    name: "Premium Gel Pen Set (Pack of 5)",
+    id: "we_2",
+    name: "Mechanical Pencils",
     category: "Writing Essentials",
-    price: 150,
-    description: "Vibrant gel pens in black, blue, red, green, and purple. 0.5mm tip.",
-    image: "https://images.unsplash.com/photo-1620216790906-8c4d7ec66b04?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    price: 30,
+    description: "0.5mm/0.7mm mechanical pencils with built-in eraser and extra lead.",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "DOMS", "Camlin"]
+    }
   },
   {
-    id: "3",
-    name: "Executive Fountain Pen",
+    id: "we_3",
+    name: "Whiteboard Markers",
     category: "Writing Essentials",
-    price: 850,
-    description: "Elegant fountain pen with an iridium nib. Perfect for signatures and gifting.",
-    image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    price: 30,
+    description: "Dry-erase markers. Easy wipe-off with vibrant colors.",
+    inStock: true,
+    options: {
+      Brand: ["Camlin", "Reynolds", "Luxor", "Flair"],
+      Color: ["Red", "Black", "Blue", "Green"]
+    }
   },
   {
-    id: "4",
-    name: "Mechanical Pencils (Pack of 2)",
+    id: "we_4",
+    name: "Pencils",
     category: "Writing Essentials",
-    price: 80,
-    description: "0.7mm mechanical pencils with a built-in eraser and extra lead.",
-    image: "https://images.unsplash.com/photo-1596484552993-9c7104f128be?q=80&w=600&auto=format&fit=crop",
-    inStock: false
+    price: 5,
+    description: "Standard HB wooden pencils for sketching and writing.",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "Apsara", "DOMS"]
+    }
   },
   {
-    id: "18",
-    name: "Whiteboard Markers (Pack of 4)",
+    id: "we_5",
+    name: "Pen Refills",
     category: "Writing Essentials",
-    price: 180,
-    description: "Dry-erase markers in Black, Blue, Red, and Green. Easy wipe-off.",
-    image: "https://images.unsplash.com/photo-1580130058001-370c8ce75ec6?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    price: 5,
+    description: "Smooth ink refills compatible with major pen brands.",
+    inStock: true,
+    options: {
+      Brand: ["Hauser", "Pentonic", "Rorito", "Trimax", "Octane"],
+      Type: ["Ball", "Gel", "Fountain"],
+      Color: ["Red", "Black", "Blue", "Green"]
+    }
   },
 
-  // Paper Products
+  // ---------------- Correction & Marking ----------------
   {
-    id: "5",
-    name: "A4 Ruled Spiral Notebook",
-    category: "Paper Products",
-    price: 120,
-    description: "200-page spiral notebook with premium 70gsm paper.",
-    image: "/images/notebook.png", // Generated image
-    inStock: true
-  },
-  {
-    id: "6",
-    name: "Pocket Memo Pad",
-    category: "Paper Products",
-    price: 40,
-    description: "Compact memo pad perfect for quick notes on the go.",
-    image: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?q=80&w=600&auto=format&fit=crop",
-    inStock: true
-  },
-  {
-    id: "7",
-    name: "Sticky Notes (Neon Colors)",
-    category: "Paper Products",
-    price: 60,
-    description: "Pack of 4 neon colored sticky notes (400 sheets total).",
-    image: "https://images.unsplash.com/photo-1519682577862-22b62b24e493?q=80&w=600&auto=format&fit=crop",
-    inStock: true
-  },
-  {
-    id: "8",
-    name: "Leather Bound Journal",
-    category: "Paper Products",
-    price: 450,
-    description: "Premium synthetic leather journal, unruled, thick 100gsm paper.",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop",
-    inStock: true
-  },
-  {
-    id: "19",
-    name: "Post-it Page Markers",
-    category: "Paper Products",
-    price: 85,
-    description: "Colorful page marker flags for easy referencing and indexing.",
-    image: "https://images.unsplash.com/photo-1532153354457-5f2fc7329f1b?q=80&w=600&auto=format&fit=crop",
-    inStock: true
-  },
-
-  // Correction & Marking
-  {
-    id: "9",
+    id: "cm_1",
     name: "Correction Tape Roller",
     category: "Correction & Marking",
-    price: 45,
+    price: 60,
     description: "Smooth application correction tape, 5mm x 8m. Tear-resistant.",
-    image: "/images/tape.png", // Generated image
-    inStock: true
+    inStock: true,
+    options: {
+      Brand: ["Camlin", "Kores", "Faber-Castell", "Luxor"]
+    }
   },
   {
-    id: "10",
-    name: "Dust-Free Eraser (Pack of 3)",
+    id: "cm_2",
+    name: "Correction Pen (Whitener)",
     category: "Correction & Marking",
     price: 30,
-    description: "High-quality polymer erasers that leave minimal dust.",
-    image: "https://images.unsplash.com/photo-1605364850731-8979fc95eb56?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    description: "Precision metal tip whitener for detailed corrections.",
+    inStock: true,
+    options: {
+      Brand: ["Camlin", "Kores", "Faber-Castell", "Luxor"]
+    }
   },
   {
-    id: "11",
-    name: "Pastel Highlighters (Pack of 6)",
+    id: "cm_3",
+    name: "Eraser",
     category: "Correction & Marking",
-    price: 180,
-    description: "Aesthetic pastel highlighters perfect for studying and journaling.",
-    image: "https://images.unsplash.com/photo-1568212104593-9c8f0f09aabf?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    price: 15,
+    description: "High-quality polymer erasers that leave minimal dust.",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "DOMS", "Faber-Castell"]
+    }
+  },
+  {
+    id: "cm_4",
+    name: "Highlighters",
+    category: "Correction & Marking",
+    price: 20,
+    description: "Vibrant fluorescent highlighters perfect for studying and journaling.",
+    inStock: true,
+    options: {
+      Brand: ["Camlin", "Luxor", "Faber-Castell", "Flair"],
+      Color: ["Red", "Yellow", "Blue", "Green"]
+    }
   },
 
-  // Measuring Tools
+  // ---------------- Paper Products ----------------
   {
-    id: "12",
-    name: "Precision Steel Ruler 30cm",
-    category: "Measuring Tools",
-    price: 80,
-    description: "Stainless steel ruler with both metric and imperial markings.",
-    image: "/images/ruler.png", // Generated image
-    inStock: true
+    id: "pp_1",
+    name: "A4 Sheets",
+    category: "Paper Products",
+    price: 2,
+    description: "Premium A4 paper sheets for printing, crafts, and origami.",
+    inStock: true,
+    options: {
+      Color: ["White", "Red", "Yellow", "Blue", "Green"]
+    }
   },
   {
-    id: "13",
-    name: "Clear Plastic Protractor",
-    category: "Measuring Tools",
+    id: "pp_2",
+    name: "Pocket Memo Pad",
+    category: "Paper Products",
     price: 25,
-    description: "180-degree clear plastic protractor for accurate angle measurement.",
-    image: "https://images.unsplash.com/photo-1623062634351-4122dcc9a3fb?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    description: "Compact memo pad perfect for quick notes on the go.",
+    inStock: true,
+    options: {
+      Color: ["Red", "Yellow", "Blue", "Green"]
+    }
   },
   {
-    id: "14",
-    name: "Engineering Compass Set",
-    category: "Measuring Tools",
-    price: 250,
-    description: "Professional grade compass with extension bar and spare leads.",
-    image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=600&auto=format&fit=crop",
-    inStock: false
+    id: "pp_3",
+    name: "Sticky Notes",
+    category: "Paper Products",
+    price: 20,
+    description: "Pack of sticky notes for reminders and indexing.",
+    inStock: true,
+    options: {
+      Color: ["Red", "Yellow", "Blue", "Green"]
+    }
   },
   {
-    id: "20",
-    name: "Mathematical Geometry Box",
-    category: "Measuring Tools",
-    price: 160,
-    description: "Complete student geometry set in a durable metal case.",
-    image: "https://images.unsplash.com/photo-1635322966219-b75ed372eb01?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    id: "pp_4",
+    name: "Long Note Book 100pgs",
+    category: "Paper Products",
+    price: 50,
+    description: "Long notebook with premium 70gsm paper (100 pages).",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "Papergrid", "ASHA"],
+      Type: ["Ruled", "Unruled"]
+    }
+  },
+  {
+    id: "pp_5",
+    name: "Long Note Book 200pgs",
+    category: "Paper Products",
+    price: 100,
+    description: "Thick long notebook for extended subjects (200 pages).",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "Papergrid", "ASHA"],
+      Type: ["Ruled", "Unruled"]
+    }
   },
 
-  // Office Utility
+  // ---------------- Measuring Tools ----------------
   {
-    id: "15",
-    name: "Rose Gold Paperclips (100 pack)",
+    id: "mt_1",
+    name: "Steel Ruler 30cm",
+    category: "Measuring Tools",
+    price: 50,
+    description: "Stainless steel ruler with both metric and imperial markings.",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "DOMS", "Faber-Castell"]
+    }
+  },
+  {
+    id: "mt_2",
+    name: "Transparent Ruler 30cm",
+    category: "Measuring Tools",
+    price: 30,
+    description: "Clear plastic ruler for accurate line drawing and measurement.",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "DOMS", "Faber-Castell"]
+    }
+  },
+  {
+    id: "mt_3",
+    name: "Protractor",
+    category: "Measuring Tools",
+    price: 10,
+    description: "180-degree clear plastic protractor for precise angle measurement.",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "DOMS", "Faber-Castell"]
+    }
+  },
+  {
+    id: "mt_4",
+    name: "Geometry Box",
+    category: "Measuring Tools",
+    price: 150,
+    description: "Complete student geometry set in a durable metal case.",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "DOMS", "Faber-Castell"]
+    }
+  },
+  {
+    id: "mt_5",
+    name: "Compass",
+    category: "Measuring Tools",
+    price: 15,
+    description: "Professional grade compass with extension bar and spare leads.",
+    inStock: true,
+    options: {
+      Brand: ["Classmate", "Nataraj", "DOMS", "Faber-Castell"]
+    }
+  },
+
+  // ---------------- Office Utility ----------------
+  {
+    id: "ou_1",
+    name: "Glue (Liquid)",
     category: "Office Utility",
     price: 60,
-    description: "Durable and stylish paperclips for organizing documents.",
-    image: "/images/paperclips.png", // Generated image
-    inStock: true
+    description: "Strong liquid adhesive for paper, cardboard, and crafts.",
+    inStock: true,
+    options: {
+      Brand: ["Fevicol", "Camlin", "Classmate", "DOMS"]
+    }
   },
   {
-    id: "16",
-    name: "Heavy Duty Stapler",
+    id: "ou_2",
+    name: "Glue Stick",
     category: "Office Utility",
-    price: 350,
-    description: "Can staple up to 50 pages at once. Ergonomic design.",
-    image: "https://images.unsplash.com/photo-1563261314-ecb438b43f11?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    price: 40,
+    description: "Mess-free glue stick. Smooth application.",
+    inStock: true,
+    options: {
+      Brand: ["Fevicol", "Camlin", "Classmate", "DOMS"]
+    }
   },
   {
-    id: "17",
-    name: "Binder Clips (Assorted Sizes)",
+    id: "ou_3",
+    name: "Paperclips (Pack of 5)",
     category: "Office Utility",
-    price: 100,
-    description: "Pack of 24 black binder clips in small, medium, and large sizes.",
-    image: "https://images.unsplash.com/photo-1579298245158-33e8f568f7d3?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    price: 10,
+    description: "Durable paperclips for organizing documents.",
+    inStock: true,
+    options: {
+      Brand: ["Fevicol", "Camlin", "Classmate", "DOMS"]
+    }
   },
   {
-    id: "21",
-    name: "Expanding Document Folder",
+    id: "ou_4",
+    name: "Stapler",
     category: "Office Utility",
-    price: 220,
-    description: "A4 size document organizer with 12 pockets and tabs.",
-    image: "https://images.unsplash.com/photo-1618410320928-25228d811631?q=80&w=600&auto=format&fit=crop",
-    inStock: true
+    price: 20,
+    description: "Mini stapler. Ergonomic design, staples up to 15 pages.",
+    inStock: true,
+    options: {
+      Brand: ["Fevicol", "Camlin", "Classmate", "DOMS"]
+    }
+  },
+  {
+    id: "ou_5",
+    name: "Scientific Calculator",
+    category: "Office Utility",
+    price: 300,
+    description: "Advanced scientific calculator for engineering and mathematics.",
+    inStock: true,
+    options: {
+      Brand: ["CASIO", "Rundun", "Achieva", "Canon"]
+    }
   }
 ];
