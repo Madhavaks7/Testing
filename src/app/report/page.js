@@ -5,6 +5,8 @@ import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import { UploadCloud, FileText, Loader2, CheckCircle, FileUp, AlertCircle } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
 
 export default function ReportPage() {
   const { user, loading } = useAuth();
@@ -13,6 +15,7 @@ export default function ReportPage() {
 
   const [file, setFile] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [pagesDetected, setPagesDetected] = useState(0);
   const [copies, setCopies] = useState(1);
   const [colorType, setColorType] = useState("bw"); // 'bw' or 'color'
@@ -75,8 +78,23 @@ export default function ReportPage() {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!file || pagesDetected <= 0 || copies <= 0) return;
+
+    setIsUploading(true);
+    let downloadURL = null;
+
+    try {
+      const uniqueFileName = `${user.uid}_${Date.now()}_${file.name}`;
+      const storageRef = ref(storage, `print_jobs/${uniqueFileName}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      downloadURL = await getDownloadURL(snapshot.ref);
+    } catch (err) {
+      console.error("Upload failed", err);
+      setError("Failed to upload document. Please try again.");
+      setIsUploading(false);
+      return;
+    }
 
     const printJobId = `print-${Date.now()}`;
     const product = {
@@ -92,12 +110,14 @@ export default function ReportPage() {
         fileName: file.name,
         pages: pagesDetected,
         color: colorType,
-        binding: softBinding ? "Soft Binding" : "None"
+        binding: softBinding ? "Soft Binding" : "None",
+        fileUrl: downloadURL
       }
     };
 
     addToCart(product, copies);
     setIsAdded(true);
+    setIsUploading(false);
     
     setTimeout(() => {
       setIsAdded(false);
@@ -312,10 +332,15 @@ export default function ReportPage() {
 
                   <button
                     onClick={handleAddToCart}
-                    disabled={isAnalyzing || pagesDetected <= 0 || isAdded}
+                    disabled={isAnalyzing || isUploading || pagesDetected <= 0 || isAdded}
                     className="mt-8 w-full flex items-center justify-center py-4 px-4 rounded-xl text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 font-medium transition-all shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed group"
                   >
-                    {isAdded ? (
+                    {isUploading ? (
+                      <span className="flex items-center gap-2">
+                        <Loader2 size={20} className="animate-spin" />
+                        Uploading Securely...
+                      </span>
+                    ) : isAdded ? (
                       <span className="flex items-center gap-2">
                         <CheckCircle size={20} />
                         Added to Cart!
