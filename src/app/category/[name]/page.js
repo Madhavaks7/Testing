@@ -13,7 +13,7 @@ export default function CategoryPage({ params }) {
   
   const [categoryProducts, setCategoryProducts] = useState([]);
   const { user, loading } = useAuth();
-  const { products, loadingProducts } = useProducts();
+  const { products, loadingProducts, refreshProducts } = useProducts();
   const router = useRouter();
 
   useEffect(() => {
@@ -21,6 +21,12 @@ export default function CategoryPage({ params }) {
       router.push("/");
     }
   }, [user, loading, router]);
+
+  useEffect(() => {
+    if (refreshProducts) {
+      refreshProducts();
+    }
+  }, []);
 
   useEffect(() => {
     if (!loadingProducts) {

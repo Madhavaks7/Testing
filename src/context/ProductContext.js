@@ -8,6 +8,13 @@ export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
 
+  const refreshProducts = () => {
+    const storedProducts = localStorage.getItem("techfusion_products");
+    if (storedProducts) {
+      setProducts(JSON.parse(storedProducts));
+    }
+  };
+
   useEffect(() => {
     const storedProducts = localStorage.getItem("techfusion_products");
     if (storedProducts) {
@@ -17,6 +24,15 @@ export const ProductProvider = ({ children }) => {
       localStorage.setItem("techfusion_products", JSON.stringify(MOCK_PRODUCTS));
     }
     setLoadingProducts(false);
+
+    // Listen to changes from other tabs
+    const handleStorage = (e) => {
+      if (e.key === "techfusion_products") {
+        refreshProducts();
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
   const addProduct = (product) => {
@@ -35,7 +51,7 @@ export const ProductProvider = ({ children }) => {
   };
 
   return (
-    <ProductContext.Provider value={{ products, addProduct, toggleStock, loadingProducts }}>
+    <ProductContext.Provider value={{ products, addProduct, toggleStock, loadingProducts, refreshProducts }}>
       {children}
     </ProductContext.Provider>
   );
