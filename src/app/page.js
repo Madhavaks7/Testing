@@ -5,7 +5,7 @@ import { auth, db } from "@/lib/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { ShoppingBag, Loader2, UserCog } from "lucide-react";
+import { ShoppingCart, GraduationCap, Loader2, UserCog } from "lucide-react";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -96,11 +96,14 @@ export default function AuthPage() {
       
       <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600 text-white shadow-lg mb-4 transform hover:scale-105 transition-transform">
-            <ShoppingBag size={32} />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-600 text-white shadow-lg mb-4 transform hover:scale-105 transition-transform relative">
+            <ShoppingCart size={32} />
+            <div className="absolute -top-2 -right-2 bg-yellow-400 rounded-full p-1 shadow-md">
+              <GraduationCap size={16} className="text-indigo-900" />
+            </div>
           </div>
-          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">Techfusion</h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-2 font-medium">Premium Stationery E-Commerce</p>
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">CampusCart</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 font-medium">Your Campus Essentials, Simplified</p>
         </div>
 
         <div className={`bg-white dark:bg-zinc-900 rounded-3xl shadow-xl overflow-hidden border transition-colors duration-300 ${isAdminPortal ? 'border-indigo-200 dark:border-indigo-500/30' : 'border-gray-100 dark:border-zinc-800'}`}>

@@ -30,7 +30,7 @@ export default function Dashboard() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
         <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-4">
-          Welcome back to Techfusion
+          Welcome back to CampusCart
         </h1>
         <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
           Explore our premium collection of stationery tailored for your creativity and productivity.

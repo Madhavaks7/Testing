@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 import { ClientProviders } from "./ClientProviders";
 
 export const metadata = {
-  title: "Techfusion | Stationery E-commerce",
-  description: "Premium stationery products for all your needs.",
+  title: "CampusCart | Your Campus Essentials",
+  description: "Your Campus Essentials, Simplified.",
 };
 
 export default function RootLayout({ children }) {

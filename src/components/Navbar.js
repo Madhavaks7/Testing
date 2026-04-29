@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
-import { LogOut, ShoppingCart, Settings, Moon, Sun, User as UserIcon } from "lucide-react";
+import { LogOut, ShoppingCart, Settings, Moon, Sun, User as UserIcon, GraduationCap } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -49,11 +49,14 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center transform group-hover:rotate-12 transition-transform">
-                <span className="text-white font-bold text-xl">T</span>
+              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center transform group-hover:rotate-12 transition-transform relative">
+                <ShoppingCart size={16} className="text-white" />
+                <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 rounded-full p-0.5 shadow-sm">
+                  <GraduationCap size={10} className="text-indigo-900" />
+                </div>
               </div>
               <span className="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-                Techfusion
+                CampusCart
               </span>
             </Link>
           </div>
